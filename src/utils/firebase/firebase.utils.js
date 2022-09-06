@@ -1,5 +1,6 @@
+
 import { initializeApp } from 'firebase/app'; // This is used for Initialize the firebase in our app so that we can perform CRUD operation
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
 import { 
     getFirestore, 
     doc, // it allows us to retrieve the documents inside our firestore database
@@ -28,11 +29,15 @@ provider.setCustomParameters({
 
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
 
 export const db = getFirestore();
 
 // Here we are getting data from auth Service and we will set that data to our db
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
+
+    if(!userAuth) return;
+
     const userDocRef = doc(db, 'users', userAuth.uid ) // (database, 'collection_name', Unique_id in collection)
     // console.log(userDocRef);
 
@@ -52,7 +57,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
             await setDoc(userDocRef, {
                 displayName,
                 email,
-                createdAt
+                createdAt,
+                ...additionalInformation
             });
 
         } catch (error) {
@@ -64,4 +70,12 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     // if user data exists
     // return userDocRef
     return userDocRef;
+}
+
+export const createAuthUserWithEmailAndPassword = async (email, password) =>  {
+
+    if(!email || !password) 
+        return;
+
+    return await createUserWithEmailAndPassword(auth, email, password)
 }

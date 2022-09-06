@@ -2,9 +2,9 @@ import React from "react";
 // import "./categories.style.scss";
 import { Routes, Route } from 'react-router-dom';
 
-import Home from "./component/routes/home/home.component";
-import Navigation from "./component/routes/navigation/navigation.component";
-import SignIn from "./component/routes/sign-in/sign-in.component";
+import Home from "./routes/home/home.component";
+import Navigation from "./routes/navigation/navigation.component";
+import SignIn from "./routes/sign-in/sign-in.component";
 
 
 const Shop = () => {
