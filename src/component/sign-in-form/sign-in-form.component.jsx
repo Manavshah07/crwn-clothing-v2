@@ -1,9 +1,11 @@
 import { async } from "@firebase/util";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
+
+// import { UserContext } from "../../contexts/user.context";
 
 import "../sign-in-form/sign-in-form.styles.scss";
 
@@ -19,15 +21,16 @@ const SignInForm = () => {
     // I am destructing the value as i want to use it
     const { email, password } = formFields;
 
-    console.log(formFields);
+    // const { setCurrentUser } = useContext(UserContext);
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     }
 
     const signInWIthGoogle = async () => {
-        const { user } = await signInWithGooglePopup();
-        await createUserDocumentFromAuth(user);
+        await signInWithGooglePopup();
+        // setCurrentUser(user);
+        // await createUserDocumentFromAuth(user);
     }
 
     const handleSubmit = async (event) => {
@@ -35,8 +38,8 @@ const SignInForm = () => {
 
 
         try {
-            const response = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log(response);
+            const {user} = await signInAuthUserWithEmailAndPassword(email, password);
+            // setCurrentUser(user);
 
             resetFormFields();
 

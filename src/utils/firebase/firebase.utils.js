@@ -1,6 +1,15 @@
 
 import { initializeApp } from 'firebase/app'; // This is used for Initialize the firebase in our app so that we can perform CRUD operation
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { 
+    getAuth, 
+    signInWithRedirect,
+    signInWithPopup,
+    GoogleAuthProvider, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut,
+    onAuthStateChanged // This is an observer listener then listens the hooks events 
+} from 'firebase/auth';
 import { 
     getFirestore, 
     doc, // it allows us to retrieve the documents inside our firestore database
@@ -87,3 +96,16 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) =>  {
 
     return await signInWithEmailAndPassword(auth, email, password)
 }
+
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback,); 
+// First is auth state and second is callback that you want to calll when everytime auth state changes
+
+// This all state occurs when the auth state changes 
+/**
+ * next: callback,
+ * error: errorCallback,
+ * complete: completeCallback
+ */
+

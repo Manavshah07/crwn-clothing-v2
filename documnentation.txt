@@ -1,0 +1,6 @@
+A COMPONENT RE-RENDERS WHENEVER IT'S STATE CHANGES OR WHENEVER IT'S PROPS CHANGES.
+
+
+React Context- 
+
+Here we can create some store(USER DATA) i.e. External Storage placement that will save my user's data and any component can use the data from the store and there is no using of props for passing the data from one component to another.
