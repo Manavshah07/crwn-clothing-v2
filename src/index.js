@@ -5,14 +5,18 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import { UserProvider } from './contexts/user.context';
-
-
+import { ProductProvider } from "./contexts/product.context";
+import { CartProvider } from "./contexts/cart.context";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
         <UserProvider>
-            <App />
+            <ProductProvider>
+                <CartProvider>
+                    <App />
+                </CartProvider>
+            </ProductProvider>
         </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
